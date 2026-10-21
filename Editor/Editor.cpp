@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "wiRenderer.h"
-#include "wiScene_BindLua.h"
 
 #include "ModelImporter.h"
 #include "Translator.h"
@@ -21,7 +20,6 @@ using namespace wi::ecs;
 enum class FileType
 {
 	INVALID,
-	LUA,
 	WISCENE,
 	OBJ,
 	GLTF,
@@ -38,7 +36,6 @@ enum class FileType
 	CPP,
 };
 static wi::unordered_map<std::string, FileType> filetypes = {
-	{"LUA", FileType::LUA},
 	{"WISCENE", FileType::WISCENE},
 	{"OBJ", FileType::OBJ},
 	{"GLTF", FileType::GLTF},
@@ -358,8 +355,6 @@ void Editor::Initialize()
 		renderComponent.setMSAASampleCount(msaa);
 		renderComponent.Load();
 		ActivatePath(&renderComponent, 0.5f, wi::Color::Black(), wi::FadeManager::FadeType::CrossFade);
-
-		wi::lua::EnableEditorFunctionality(this, &renderComponent);
 
 		auto ext_video = wi::resourcemanager::GetSupportedVideoExtensions();
 		for (auto& x : ext_video)
@@ -1112,7 +1107,7 @@ void EditorComponent::Load()
 		else
 		{
 			wi::eventhandler::Subscribe_Once(wi::eventhandler::EVENT_THREAD_SAFE_POINT, [=](uint64_t userdata) {
-				wi::lua::RunFile(last_script_path);
+				// Was used for scripting
 			});
 		}
 	});
@@ -1132,7 +1127,7 @@ void EditorComponent::Load()
 	stopButton.SetTooltip("Stops every script background processes that are still running.");
 	stopButton.SetScriptTip("killProcesses()");
 	stopButton.OnClick([](wi::gui::EventArgs args) {
-		wi::lua::KillProcesses();
+		// Do nothing for now
 	});
 	topmenuWnd.AddWidget(&stopButton);
 
@@ -5579,17 +5574,6 @@ void EditorComponent::Open(std::string filename)
 	if (type == FileType::INVALID)
 		return;
 
-	if (type == FileType::LUA)
-	{
-		last_script_path = filename;
-		main->config.Set("last_script_path", last_script_path);
-		main->config.Commit();
-		playButton.SetScriptTip("dofile(\"" + last_script_path + "\")");
-		wi::lua::RunFile(filename);
-		componentsWnd.RefreshEntityTree();
-		RegisterRecentlyUsed(filename);
-		return;
-	}
 	if (type == FileType::VIDEO)
 	{
 		GetCurrentScene().Entity_CreateVideo(wi::helper::GetFileNameFromPath(filename), filename);
@@ -6704,8 +6688,6 @@ void EditorComponent::SetCurrentScene(int index)
 	current_scene = index;
 	this->renderPath->scene = &scenes[current_scene].get()->scene;
 	this->renderPath->camera = &scenes[current_scene].get()->camera;
-	wi::lua::scene::SetGlobalScene(renderPath->scene);
-	wi::lua::scene::SetGlobalCamera(renderPath->camera);
 	componentsWnd.RefreshEntityTree();
 	RefreshSceneList();
 
@@ -6757,8 +6739,6 @@ void EditorComponent::RefreshSceneList()
 			{
 				return;
 			}
-
-			wi::lua::KillProcesses();
 
 			translator.selected.clear();
 			wi::scene::Scene& scene = scenes[i]->scene;

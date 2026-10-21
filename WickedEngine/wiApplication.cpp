@@ -5,7 +5,6 @@
 #include "wiTimer.h"
 #include "wiInput.h"
 #include "wiBacklog.h"
-#include "wiApplication_BindLua.h"
 #include "wiVersion.h"
 #include "wiEnums.h"
 #include "wiTextureHelper.h"
@@ -54,11 +53,6 @@ namespace wi
 		wi::initializer::InitializeComponentsAsync();
 
 		alwaysactive = wi::arguments::HasArgument("alwaysactive");
-
-		// Note: lua is always initialized immediately on main thread by wi::initializer, so this is safe to do:
-		assert(wi::initializer::IsInitializeFinished(wi::initializer::INITIALIZED_SYSTEM_LUA));
-		Luna<wi::lua::Application_BindLua>::push_global(wi::lua::GetLuaState(), "main", this);
-		Luna<wi::lua::Application_BindLua>::push_global(wi::lua::GetLuaState(), "application", this);
 	}
 
 	void Application::ActivatePath(RenderPath* component, float fadeSeconds, wi::Color fadeColor, FadeManager::FadeType fadetype)
@@ -221,40 +215,6 @@ namespace wi
 
 		splash_screen = {}; // splash screen no longer needed after initialization, it is deleted
 
-		static bool startup_script = false;
-		if (!startup_script)
-		{
-			startup_script = true;
-			const std::string workingdir = wi::helper::GetCurrentPath() + "/";
-			const std::string rewriteable_script_filename = workingdir + rewriteable_startup_script_text;
-			if (wi::helper::FileExists(rewriteable_script_filename))
-			{
-				if (wi::lua::RunFile(rewriteable_script_filename))
-				{
-					wi::backlog::post("Executed startup file: " + rewriteable_script_filename);
-				}
-			}
-			else
-			{
-				const std::string startup_lua_filename = workingdir + "startup.lua";
-				if (wi::helper::FileExists(startup_lua_filename))
-				{
-					if (wi::lua::RunFile(startup_lua_filename))
-					{
-						wi::backlog::post("Executed startup file: " + startup_lua_filename);
-					}
-				}
-				const std::string startup_luab_filename = workingdir + "startup.luab";
-				if (wi::helper::FileExists(startup_luab_filename))
-				{
-					if (wi::lua::RunBinaryFile(startup_luab_filename))
-					{
-						wi::backlog::post("Executed startup file: " + startup_luab_filename);
-					}
-				}
-			}
-		}
-
 		if (!is_window_active && !alwaysactive)
 		{
 			// If the application is not active, disable Update loops:
@@ -395,9 +355,6 @@ namespace wi
 
 		infoDisplay.rect = {};
 
-		wi::lua::SetDeltaTime(double(dt));
-		wi::lua::Update();
-
 		wi::backlog::Update(canvas, dt);
 
 		wi::resourcemanager::UpdateStreamingResources(dt);
@@ -413,8 +370,6 @@ namespace wi
 
 	void Application::FixedUpdate()
 	{
-		wi::lua::FixedUpdate();
-
 		if (activePath != nullptr)
 		{
 			activePath->FixedUpdate();
@@ -424,8 +379,6 @@ namespace wi
 	void Application::Render()
 	{
 		auto range = wi::profiler::BeginRangeCPU("Render");
-
-		wi::lua::Render();
 
 		if (activePath != nullptr)
 		{

@@ -179,7 +179,6 @@ namespace wi::initializer
 		wi::jobsystem::Execute(ctx, [](wi::jobsystem::JobArgs args) { wi::GaussianSplatModel::Initialize(); systems[INITIALIZED_SYSTEM_GAUSSIAN_SPLAT].store(true); });
 
 		// Initialize these immediately:
-		wi::lua::Initialize(); systems[INITIALIZED_SYSTEM_LUA].store(true);
 		wi::audio::Initialize(); systems[INITIALIZED_SYSTEM_AUDIO].store(true);
 		wi::image::Initialize(); systems[INITIALIZED_SYSTEM_IMAGE].store(true);
 		wi::font::Initialize(); systems[INITIALIZED_SYSTEM_FONT].store(true);

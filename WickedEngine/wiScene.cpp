@@ -9,7 +9,6 @@
 #include "wiBacklog.h"
 #include "wiTimer.h"
 #include "wiUnorderedMap.h"
-#include "wiLua.h"
 #include "wiAllocator.h"
 #include "wiProfiler.h"
 
@@ -5723,12 +5722,6 @@ namespace wi::scene
 					script.script.clear();
 					script.script_hash = script.resource.GetScriptHash();
 					std::string str = script.resource.GetScript();
-					wi::lua::AttachScriptParameters(str, script.filename, wi::lua::GeneratePID(), "local function GetEntity() return " + std::to_string(entity) + "; end;", "");
-					wi::lua::CompileText(str, script.script);
-				}
-				if (!script.script.empty())
-				{
-					wi::lua::RunBinaryData(script.script.data(), script.script.size(), script.filename.c_str());
 				}
 
 				if (script.IsPlayingOnlyOnce())

@@ -343,9 +343,6 @@ void Example_ImGuiRenderer::Load()
 	wi::scene::GetScene().weather = WeatherComponent();
 	this->ClearSprites();
 	this->ClearFonts();
-	if (wi::lua::GetLuaState() != nullptr) {
-		wi::lua::KillProcesses();
-	}
 
 	// Reset camera position:
 	TransformComponent transform;

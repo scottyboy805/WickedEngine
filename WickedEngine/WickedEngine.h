@@ -46,7 +46,6 @@
 #include "wiPhysics.h"
 #include "wiEnums.h"
 #include "wiInitializer.h"
-#include "wiLua.h"
 #include "wiGraphics.h"
 #include "wiGraphicsDevice.h"
 #include "wiGUI.h"

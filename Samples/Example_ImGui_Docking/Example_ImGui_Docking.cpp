@@ -391,10 +391,6 @@ void Example_ImGuiRenderer::Load()
 
 	this->ClearSprites();
 	this->ClearFonts();
-	if (wi::lua::GetLuaState() != nullptr)
-	{
-		wi::lua::KillProcesses();
-	}
 
 	// Reset camera position:
 	TransformComponent transform;
@@ -1360,21 +1356,6 @@ void Example_ImGuiRenderer::Update(float dt)
 			ImGui::SetKeyboardFocusHere();
 			bSetKeyBoardFocus = false;
 			bScrollToLastLine = true;
-		}
-		ImGui::Text("Execute Lua:");
-		ImGui::SameLine();
-		ImGui::SetCursorPos(ImGui::GetCursorPos() + ImVec2(0, -3));
-		ImGui::PushItemWidth(-(IMGUIBUTTONWIDE * 2 + 24 + 20));
-		if (ImGui::InputText("##LuaCommand", &lua[0], 2048, ImGuiInputTextFlags_EnterReturnsTrue))
-		{
-			wi::lua::RunText(lua);
-			lua_history.push_back(lua);
-			#ifdef _WIN32
-			strcpy_s(lua, "");
-			#elif  __linux__
-			strcpy(lua, "");
-			#endif
-			bSetKeyBoardFocus = true;
 		}
 		if (ImGui::IsItemActive())
 		{

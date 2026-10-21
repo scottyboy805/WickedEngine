@@ -5,7 +5,6 @@
 #include "wiFont.h"
 #include "wiSpriteFont.h"
 #include "wiImage.h"
-#include "wiLua.h"
 #include "wiInput.h"
 #include "wiPlatform.h"
 #include "wiHelper.h"
@@ -43,7 +42,6 @@ namespace wi::backlog
 	float autoscroll = 0; // automatic scroll behaviour while backlog is not really updated with a proper scrollbar (init screen, shader compile, etc) the text should still scroll
 
 	bool locked = false;
-	bool blockLuaExec = false;
 	LogLevel logLevel = LogLevel::Default;
 	LogLevel unseen = LogLevel::None;
 
@@ -344,14 +342,6 @@ namespace wi::backlog
 							{
 								history.pop_front();
 							}
-						}
-						if (!blockLuaExec)
-						{
-							wi::lua::RunText(args.sValue);
-						}
-						else
-						{
-							post("Lua execution is disabled", LogLevel::Error);
 						}
 						inputField.SetText("");
 					});
@@ -738,15 +728,6 @@ namespace wi::backlog
 	void Unlock()
 	{
 		locked = false;
-	}
-
-	void BlockLuaExecution()
-	{
-		blockLuaExec = true;
-	}
-	void UnblockLuaExecution()
-	{
-		blockLuaExec = false;
 	}
 
 	void SetLogLevel(LogLevel newLevel)

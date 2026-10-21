@@ -173,9 +173,6 @@ void TestsRenderer::Load()
 		wi::scene::GetScene().weather = WeatherComponent();
 		this->ClearSprites();
 		this->ClearFonts();
-		if (wi::lua::GetLuaState() != nullptr) {
-            wi::lua::KillProcesses();
-        }
 
 		// Reset camera position:
 		TransformComponent transform;
@@ -219,10 +216,6 @@ void TestsRenderer::Load()
 			break;
 		case HAIRPARTICLE:
 			wi::scene::LoadModel(CONTENT_DIR "models/hairparticle_torus.wiscene", XMMatrixTranslation(0, 1, 0));
-			break;
-		case LUASCRIPT:
-			wi::renderer::SetToDrawGridHelper(true);
-			wi::lua::RunFile("test_script.lua");
 			break;
 		case WATERTEST:
 			wi::renderer::SetTemporalAAEnabled(true);

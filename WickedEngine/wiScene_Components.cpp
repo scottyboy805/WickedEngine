@@ -9,7 +9,6 @@
 #include "wiBacklog.h"
 #include "wiTimer.h"
 #include "wiUnorderedMap.h"
-#include "wiLua.h"
 
 #include "Utility/meshoptimizer/meshoptimizer.h"
 
