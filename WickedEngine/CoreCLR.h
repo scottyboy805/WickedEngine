@@ -10,6 +10,9 @@
 
 namespace wi::coreclr
 {
+	typedef void (CORECLR_DELEGATE_CALLTYPE* VoidCall)();
+	typedef int (CORECLR_DELEGATE_CALLTYPE* ArgCall)(void* arg, int32_t argByteSize);
+
 	struct Host
 	{
 	private:
@@ -27,7 +30,8 @@ namespace wi::coreclr
 		load_assembly_bytes_fn clrLoadAssemblyBytes = nullptr;
 
 		friend int Initialize();
-		friend int GetFunctionPointer(const std::string typeName, const std::string methodName, void** delegate);
+		friend int GetFunctionPointer(const std::string typeName, const std::string methodName, VoidCall* delegate);
+		friend int GetFunctionPointer(const std::string typeName, const std::string methodName, ArgCall* delegate);
 		friend int LoadAssembly(const std::string assemblyPath);
 		friend void Shutdown();
 
@@ -44,7 +48,8 @@ namespace wi::coreclr
 	Host* GetHost();
 
 	int Initialize();
-	int GetFunctionPointer(const std::string typeName, const std::string methodName, void** delegate);
+	int GetFunctionPointer(const std::string typeName, const std::string methodName, VoidCall* delegate);
+	int GetFunctionPointer(const std::string typeName, const std::string methodName, ArgCall* delegate);
 	int LoadAssembly(const std::string assemblyPath);
 	void Shutdown();
 }

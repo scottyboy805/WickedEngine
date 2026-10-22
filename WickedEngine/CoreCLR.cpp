@@ -117,10 +117,11 @@ namespace wi::coreclr
 			wi::backlog::post("Failed to load assembly: " + assemblyPath + " Error code: " + std::to_string(rc));
 			return rc;
 		}
+		wi::backlog::post("Successfully loaded assembly: " + assemblyPath);
 		return 0;
 	}
 
-	int GetFunctionPointer(const std::string typeName, const std::string methodName, void** delegate)
+	int GetFunctionPointer(const std::string typeName, const std::string methodName, VoidCall* delegate)
 	{
 		if (!host.IsInitialized())
 		{
@@ -129,7 +130,26 @@ namespace wi::coreclr
 		}
 		std::wstring wtypeName(typeName.begin(), typeName.end());
 		std::wstring wmethodName(methodName.begin(), methodName.end());
-		int rc = host.clrGetFunctionPointer(wtypeName.c_str(), wmethodName.c_str(), nullptr, nullptr, nullptr, delegate);
+		std::wstring wdelegateName(L"System.Action");
+		int rc = host.clrGetFunctionPointer(wtypeName.c_str(), wmethodName.c_str(), wdelegateName.c_str(), nullptr, nullptr, (void**)delegate);
+		if (rc != 0)
+		{
+			wi::backlog::post("Failed to get function pointer for: " + typeName + "." + methodName + " Error code: " + std::to_string(rc));
+			return rc;
+		}
+		return 0;
+	}
+
+	int GetFunctionPointer(const std::string typeName, const std::string methodName, ArgCall* delegate)
+	{
+		if (!host.IsInitialized())
+		{
+			wi::backlog::post("CoreCLR is not initialized!");
+			return -1;
+		}
+		std::wstring wtypeName(typeName.begin(), typeName.end());
+		std::wstring wmethodName(methodName.begin(), methodName.end());
+		int rc = host.clrGetFunctionPointer(wtypeName.c_str(), wmethodName.c_str(), nullptr, nullptr, nullptr, (void**)delegate);
 		if (rc != 0)
 		{
 			wi::backlog::post("Failed to get function pointer for: " + typeName + "." + methodName + " Error code: " + std::to_string(rc));
