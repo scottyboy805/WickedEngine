@@ -2,10 +2,11 @@
 #define NETHOST_USE_AS_STATIC
 
 #include <string>
-#include "WickedEngine.h"
 #include "hostfxr.h"
 #include "nethost.h"
 #include "coreclr_delegates.h"
+
+#include "wiPlatform.h"
 
 namespace CoreCLR
 {

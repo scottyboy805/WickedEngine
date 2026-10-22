@@ -1,5 +1,6 @@
 
 #include "CoreCLR.h"
+#include "wiBacklog.h"
 
 #define MAX_PATH 260
 

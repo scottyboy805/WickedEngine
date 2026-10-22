@@ -76,6 +76,8 @@
 #include "wiTrailRenderer.h"
 #include "wiGaussianSplatModel.h"
 
+#include "CoreCLR.h"
+
 #ifndef WICKED_CMAKE_BUILD
 
 #ifdef PLATFORM_WINDOWS_DESKTOP
