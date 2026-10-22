@@ -8,7 +8,7 @@
 
 #include "wiPlatform.h"
 
-namespace CoreCLR
+namespace wi::coreclr
 {
 	struct Host
 	{

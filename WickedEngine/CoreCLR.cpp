@@ -4,7 +4,7 @@
 
 #define MAX_PATH 260
 
-namespace CoreCLR
+namespace wi::coreclr
 {
 	static Host host;
 

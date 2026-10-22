@@ -54,9 +54,6 @@ namespace wi
 		wi::initializer::InitializeComponentsAsync();
 
 		alwaysactive = wi::arguments::HasArgument("alwaysactive");
-
-		// Init scripting
-		CoreCLR::Initialize();
 	}
 
 	void Application::ActivatePath(RenderPath* component, float fadeSeconds, wi::Color fadeColor, FadeManager::FadeType fadetype)
