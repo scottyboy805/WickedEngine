@@ -49,6 +49,9 @@
     <Filter Include="UTILITY\meshoptimizer">
       <UniqueIdentifier>{5634b6ae-7f51-48ed-8a33-a5be8a31a56b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreCLR">
+      <UniqueIdentifier>{d97b8614-b2aa-4d14-945d-1be553f6b13d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)wiVersion.h">
@@ -1329,6 +1332,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utility\aac.h">
       <Filter>UTILITY</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)nethost.h">
+      <Filter>CoreCLR</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)coreclr_delegates.h">
+      <Filter>CoreCLR</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CoreCLR.h">
+      <Filter>CoreCLR</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)hostfxr.h">
+      <Filter>CoreCLR</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)wiVersion.cpp">
@@ -2032,6 +2047,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\Shaders\TestComputeWrapper.cpp">
       <Filter>JOLT</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)nethost.cpp">
+      <Filter>CoreCLR</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CoreCLR.cpp">
+      <Filter>CoreCLR</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CoreCLR.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)coreclr_delegates.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)hostfxr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Jolt\AABBTree\AABBTreeBuilder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Jolt\AABBTree\AABBTreeToBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Jolt\AABBTree\NodeCodec\NodeCodecQuadTreeHalfFloat.h" />
@@ -339,6 +342,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Jolt\TriangleSplitter\TriangleSplitter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Jolt\TriangleSplitter\TriangleSplitterBinning.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Jolt\TriangleSplitter\TriangleSplitterMean.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)nethost.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utility\aac.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utility\dds.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utility\dxva.h" />
@@ -445,6 +449,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)wiXInput.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CoreCLR.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\AABBTree\AABBTreeBuilder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\Compute\ComputeSystem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\Compute\CPU\ComputeBufferCPU.cpp" />
@@ -598,6 +603,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\TriangleSplitter\TriangleSplitter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\TriangleSplitter\TriangleSplitterBinning.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Jolt\TriangleSplitter\TriangleSplitterMean.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)nethost.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utility\lodepng.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utility\meshoptimizer\allocator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utility\meshoptimizer\clusterizer.cpp" />
