@@ -26,6 +26,7 @@ namespace wi::scene
 	{
 		virtual ~Scene() = default;
 
+		void* script;
 		wi::ecs::ComponentLibrary componentLibrary;
 
 		wi::ecs::ComponentManager<NameComponent>& names = componentLibrary.Register<NameComponent>("wi::scene::Scene::names");
